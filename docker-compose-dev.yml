@@ -1,0 +1,68 @@
+version: "3.7"
+
+services:
+  app-socket:
+    build: .
+    container_name: app-socket
+    command: [ "npm", "run", "prod:wss" ]
+    restart: always
+    env_file:
+      - envs/.env
+    networks:
+      - backend
+
+  app-rest:
+    build: ./
+    container_name: app-rest
+    command: [ "npm", "run", "prod:api" ]
+    restart: always
+    ports:
+      - '8081:8081'
+    env_file:
+      - envs/.env
+    networks:
+      - backend
+
+  app-collector:
+    build: ./
+    container_name: collector
+    command: [ "npm", "run", "prod:coll" ]
+    restart: always
+    ports:
+      - '8059:8059'
+    env_file:
+      - envs/.env.collector
+    networks:
+      - backend
+
+  app-statistic:
+    build: ./
+    container_name: statistic
+    command: [ "npm", "run", "prod:stat" ]
+    restart: always
+    ports:
+      - '8058:8058'
+    env_file:
+      - envs/.env.statistic
+    networks:
+      - backend
+
+  db:
+    container_name: rate
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: rate
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+
+networks:
+  backend:
+    name: be_network
+    driver: bridge

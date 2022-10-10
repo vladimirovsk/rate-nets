@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+  app-socket:
+    env_file:
+      - ./envs/.env
+
+  app-rest:
+    ports:
+      - 8092:8081
+    env_file:
+      - ./envs/.env
+
+  app-collector:
+    ports:
+      - 8095:8059
+    env_file:
+      - ./envs/.env.collector
+
+  app-statistic:
+    ports:
+      - 8096:8058
+    env_file:
+      - ./envs/.env.statistic

@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  app-socket:
+    build: ./
+    command: [ "npm", "run", "prod:wss" ]
+    restart: always
+
+  app-rest:
+    build: ./
+    command: [ "npm", "run", "prod:api" ]
+    restart: always
+
+  app-collector:
+    build: ./
+    command: [ "npm", "run", "prod:coll" ]
+    restart: always
+
+  app-statistic:
+    build: ./
+    command: [ "npm", "run", "prod:stat" ]
+    restart: always

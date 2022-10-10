@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+import "google/protobuf/wrappers.proto";
+//google.protobuf.Int32Value
+//google.protobuf.StringValue
+
+package events;
+
+service ContractEventsController {
+  rpc getEventByNameAndTitle (GetByEventNameAndTitleRequest) returns (ResponseEventByNameAndTitle){}
+  rpc getEventByNameAndTitleAndPeriod (GetByEventNameAndTitlePeriodRequest) returns (ResponseEventByNameAndTitlePeriod) {}
+}
+
+message GetByEventNameAndTitlePeriodRequest {
+  string name = 1;
+  string title = 2;
+  int32 startPeriod = 3;
+  int32 endPeriod = 4;
+}
+
+message GetByEventNameAndTitleRequest {
+  string name = 1;
+  string title = 2;
+}
+
+message ResponseEventByNameAndTitle {
+  string status = 1;
+  data data = 2;
+}
+
+message ResponseEventByNameAndTitlePeriod {
+  string status = 1;
+  data data = 2;
+}
+
+message data {
+  string title = 1;
+  repeated info data = 2;
+}
+
+message info {
+  int32 id = 1;
+  int32 block = 2;
+  int32 time = 3;
+  string hash = 4;
+  InfoData data = 5;
+}
+
+message InfoData {
+  string user = 1;
+  string userId = 2;
+  string sponsorId = 3;
+  string userType = 4;
+  string token = 5;
+  string stakingPool = 6;
+  string tokenAmount = 7;
+  string systemTokenAmount = 8;
+  string swapTokenAmount = 9;
+  string systemTokenRecipient = 10;
+}
+
+
+

@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+import "google/protobuf/wrappers.proto";
+//google.protobuf.Int32Value
+//google.protobuf.StringValue
+
+package statistics;
+
+service ContractStatisticController {
+  rpc getStatisticCalculate (GetEventsByNameAndTitle) returns (ResponseInfoAll){}
+  rpc getStatisticCalculatePeriod (GetEventsByNameAndTitlePeriod) returns (ResponseInfoPeriod){}
+
+}
+
+message GetEventsByNameAndTitle{
+  string name = 1;
+  string title = 2;
+}
+
+message GetEventsByNameAndTitlePeriod{
+  string name = 1;
+  string title = 2;
+  int32 startPeriod = 3;
+  int32 endPeriod = 4;
+}
+
+message ResponseInfoAll {
+  migratedWallets migratedWallets = 1;
+  ap4Wallets ap4Wallets = 2;
+  totalTurnover totalTurnover = 3;
+  totalAirDrop totalAirDrop = 4;
+}
+
+message ResponseInfoPeriod {
+  activeUser activeUser = 1;
+  totalTurnover totalTurnover = 2;
+  totalAirDrop totalAirDrop = 3;
+}
+
+message activeUser {
+  string volume = 1;
+  int32 oldUser = 2;
+  int32 newUser = 3;
+}
+
+message period {
+  int32 startPeriod = 1;
+  int32 endPeriod2 = 2;
+}
+
+message dataGraph {
+  repeated dataLines lines = 1;
+  repeated string categories = 2 ;
+}
+
+message dataLines {
+  string name = 1;
+  repeated int32 data = 2;
+  string color = 3;
+}
+
+message migratedWallets {
+  string volume = 1;
+}
+
+message ap4Wallets {
+  string volume = 1;
+}
+
+message totalTurnover {
+  string volume = 1;
+  string receivedBNB = 2;
+  string boughtBNB = 3;
+  string receivedBUSD = 4;
+  string boughtBUSD = 5;
+  string turnoverUSDT = 6;
+  dataGraph graph = 7;
+}
+
+message totalAirDrop {
+  string volume = 1;
+  string airDrop20 = 2;
+  string airDrop5 = 3;
+  string totalUSDT = 4;
+  string bugAirDrop = 5;
+  dataGraph graph = 6;
+}
